@@ -1,0 +1,2 @@
+nativeBuild:
+	./gradlew clean shadowJar

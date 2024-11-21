@@ -1,0 +1,42 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.graalvm.buildtools.native' version '0.10.3'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '21'
+    }
+}
+
+shadowJar {
+    manifest {
+        attributes('Main-Class': 'org.example.MainKt')
+    }
+}
+
+
+test {
+    useJUnitPlatform()
+}
